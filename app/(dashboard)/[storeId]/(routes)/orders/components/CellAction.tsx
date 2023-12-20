@@ -38,11 +38,11 @@ const CellAction: React.FC<CellActionsProps> = ({
     if (userId) {
       try {
         setLoading(true);
-        await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
+        await axios.delete(`/api/${params.storeId}/orders/${data.id}`);
         router.refresh();
         toast.success("Order deleted.")
       } catch (error) {
-        toast.error("Make sure you removed all products using this color first.")
+        toast.error("Something went wrong.")
       } finally {
         setLoading(false)
         setOpen(false)
