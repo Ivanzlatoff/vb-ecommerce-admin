@@ -11,7 +11,7 @@ interface CartItem extends Product {
 }
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "https://vb-ecommerce-store-7dhpfm01f-ivanzlatoff.vercel.app",
+  "Access-Control-Allow-Origin": "https://vb-ecommerce-store-f16m7jgup-ivanzlatoff.vercel.app",
   "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-type, Authorization",
 };
