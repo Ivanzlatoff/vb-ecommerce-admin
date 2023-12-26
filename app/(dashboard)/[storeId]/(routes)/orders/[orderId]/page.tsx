@@ -36,7 +36,7 @@ const OrderPage = async ({
     productPrice: Number(item.product.price),
     quantity: Number(item.quantity),
     totalPrice: Number(item.product.price) * Number(item.quantity)
-  }))
+  }));
 
   return (
     <div className="p-10">

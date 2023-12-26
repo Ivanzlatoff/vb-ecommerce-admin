@@ -1,11 +1,30 @@
 import Stripe from "stripe";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-
+import sgMail from '@sendgrid/mail';
 
 import { stripe } from "@/lib/stripe";
 import prismadb from "@/lib/prismadb";
 
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+
+const sendEmail = async (to: string, subject: string, text: string) => {
+  const message = {
+    to,
+    from: 'vinogradnik.bessarabii@gmail.com',
+    bcc: 'vinogradnik.bessarabii@gmail.com',
+    subject,
+    text,        
+  };
+
+  try {
+    await sgMail.send(message);
+    console.log(`Email sent to ${to}`);
+  } catch(err) {
+    console.error(`Error sending email: ${err}`);
+  }
+}
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -50,22 +69,53 @@ export async function POST(req: Request) {
         phone: session?.customer_details?.phone || ''
       },
       include: {
-        orderItems: true,
+        orderItems: {
+          include: {
+            product: {
+              include: {
+                color: true
+              }
+            }
+          }
+        },
       }
     });
 
-    // const productIds = order.orderItems.map((orderItem) => orderItem.productId);
+    const productDetails = order.orderItems.map(({ product, quantity }) => {
+      return (
+          `  Продукт: ${product.name} ${product.color.name}
+          Кількість: ${quantity} кг
+          Ціна за 100 кг: ${product.price} грн
+          Усього за товар: ${quantity * Number(product.price)} грн
+          `
+      )
+    });
 
-    // await prismadb.product.updateMany({
-    //   where: {
-    //     id: {
-    //       in: [...productIds]
-    //     }
-    //   },
-    //   data: {
-    //     isArchived: true
-    //   }
-    // });
+    const orderPrice = order.orderItems.reduce((total, item) => {
+      return total + (Number(item.product.price) * Number(item.quantity))
+    }, 0 );
+
+    const textMessage = `
+        Привіт,
+    
+        Дякуємо за ваше замовлення в нашому магазині. Ми раді повідомити, що ваше замовлення успішно отримано і готується до відправки.
+    
+        Деталі вашого замовлення наведені нижче:
+    
+        Товари:
+        
+        ${productDetails}
+    
+        Усього разом: ${orderPrice} грн.
+    
+        Ми надішлемо ваше замовлення в найближчий час. Якщо ви маєте будь-які питання або побажання, будь ласка, зв'яжіться з нами за допомогою електронної пошти або телефону, зазначених на нашому веб-сайті.
+    
+        Дякуємо, що обрали наш магазин.
+    
+        З повагою,
+        Команда магазину.
+    `;
+    sendEmail(order.email, 'Підтвердження замовлення', textMessage);
   }
 
   return new NextResponse(null, { status: 200 });
