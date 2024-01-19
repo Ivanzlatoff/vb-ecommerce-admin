@@ -12,7 +12,6 @@ export const sendTwoFactorTokenEmail = async(
   const message = {
     to: email,
     from: 'vinogradnik.bessarabii@gmail.com',
-    bcc: 'vinogradnik.bessarabii@gmail.com',
     subject: '2FA Code',
     html: `<p>Your 2FA code: ${token}</p>`,  
   };
@@ -34,7 +33,6 @@ export const sendPasswordResetEmail = async (
   const message = {
     to: email,
     from: 'vinogradnik.bessarabii@gmail.com',
-    bcc: 'vinogradnik.bessarabii@gmail.com',
     subject: 'Reset your password',
     html: `<p>Click <a href=${resetLink}>here</a> to reset password.</p>`,        
   };
@@ -55,7 +53,6 @@ export const sendVerificationEmail = async (
   const message = {
     to: email,
     from: 'vinogradnik.bessarabii@gmail.com',
-    bcc: 'vinogradnik.bessarabii@gmail.com',
     subject: 'Confirm your email',
     html: `<p>Click <a href=${confirmLink}>here</a> to confirm email.</p>`,        
   };
