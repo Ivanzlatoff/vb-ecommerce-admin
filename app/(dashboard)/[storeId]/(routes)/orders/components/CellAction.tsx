@@ -24,7 +24,7 @@ const CellAction: React.FC<CellActionsProps> = ({
   const params = useParams();
 
   const { data: session } = useSession();
-  const userId = session?.user.userId;
+  const userId = session?.user.id;
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);

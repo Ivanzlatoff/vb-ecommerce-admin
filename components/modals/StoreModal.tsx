@@ -39,7 +39,7 @@ const StoreModal = () => {
   });
 
   const { data: session } = useSession();
-  const userId = session?.user.userId;
+  const userId = session?.user?.id;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {

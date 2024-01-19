@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { redirect, useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/AlertModal";
+import CreatedOrUpdated from "@/components/CreatedOrUpdated";
 
 
 const formSchema = z.object({
@@ -52,7 +53,7 @@ const SizeForm: React.FC<SizeFormProps> = ({
   const action = initialData ? "Save changes" : "Create";
 
   const { data: session } = useSession();
-  const userId = session?.user.userId;
+  const userId = session?.user.id;
 
   const form = useForm<SizeFormValues>({
     resolver: zodResolver(formSchema),
@@ -80,7 +81,7 @@ const SizeForm: React.FC<SizeFormProps> = ({
         setLoading(false)
       }
     } else {
-      redirect("/auth/sign-in")
+      redirect("/auth/login")
     }
   };
 
@@ -99,7 +100,7 @@ const SizeForm: React.FC<SizeFormProps> = ({
         setOpen(false)
       }
    } else {
-    redirect("/auth/sign-in")
+    redirect("/auth/login")
    }
   };
 
@@ -130,6 +131,13 @@ const SizeForm: React.FC<SizeFormProps> = ({
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+          {initialData && (
+            <CreatedOrUpdated
+              name={session?.user?.name!}
+              createdAt={initialData?.createdAt!}
+              updatedAt={initialData?.updatedAt!}
+            />
+          )}
           <div className="grid grid-cols-3 gap-8">
             <FormField 
               control={form.control}

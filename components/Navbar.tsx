@@ -1,14 +1,14 @@
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { authOptions } from '@/lib/auth';
 import { buttonVariants } from "./ui/button";
 import { UserAccountNav } from "./UserAccountNav";
 import MainNav from "@/components/MainNav";
 import StoreSwitcher from "@/components/StoreSwitcher";
 import prismadb from "@/lib/prismadb";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { auth } from "@/auth";
+import { useStores } from "@/app/hooks/use-stores";
 
 
 interface NavbarProps {
@@ -18,18 +18,14 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = async ({
   newOrders
 }) => {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user.userId;
+  const session = await auth();
+  const userId = session?.user.id;
 
   if (!userId) {
-    redirect('/auth/sign-in');
+    redirect('/auth/login');
   }
 
-  const stores = await prismadb.store.findMany({
-    where: {
-      userId,
-    },
-  });
+  const stores = await useStores(userId);
 
   return (
     <div className='border-b'>
@@ -41,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = async ({
           {session?.user ? (
             <UserAccountNav />
           ) : (
-            <Link className={buttonVariants()} href="/auth/sign-in">
+            <Link className={buttonVariants()} href="/auth/login">
               Sign in
             </Link>
           )}

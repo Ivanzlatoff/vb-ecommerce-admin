@@ -1,9 +1,10 @@
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { authOptions } from "@/lib/auth";
 import prismadb from "@/lib/prismadb";
 import SettingsForm from "./components/SettingsForm";
+import { auth } from "@/auth";
+import RoleGate from "@/components/auth/RoleGate";
+import { UserRole } from "@prisma/client";
 
 
 interface SettingsPageProps {
@@ -16,11 +17,11 @@ interface SettingsPageProps {
 const SettingsPage: React.FC<SettingsPageProps> = async ({
   params
 }) => {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user.userId;
+  const session = await auth();
+  const userId = session?.user.id;
 
   if (!userId) {
-    redirect("/auth/sign-in");
+    redirect("/auth/login");
   }
 
   const store = await prismadb.store.findFirst({
@@ -37,7 +38,9 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <SettingsForm initialData={store} />
+        <RoleGate allowedRole={UserRole.ADMIN}>
+          <SettingsForm initialData={store} />
+        </RoleGate>
       </div>
     </div>
   )

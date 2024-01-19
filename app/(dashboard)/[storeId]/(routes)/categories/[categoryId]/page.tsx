@@ -1,5 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import CategoryForm from "./components/CategoryForm";
+import RoleGate from "@/components/auth/RoleGate";
+import { UserRole } from "@prisma/client";
 
 
 const CategoryPage = async ({
@@ -22,10 +24,12 @@ const CategoryPage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoryForm 
-          billboards={billboards}
-          initialData={category} 
-        />
+        <RoleGate allowedRole={UserRole.ADMIN}>
+          <CategoryForm 
+            billboards={billboards}
+            initialData={category} 
+          />
+        </RoleGate>
       </div>
     </div>
   )

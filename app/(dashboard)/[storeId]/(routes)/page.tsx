@@ -1,8 +1,6 @@
-import { getServerSession } from "next-auth";
 import { CreditCard, Package } from "lucide-react";
 
 import User from "@/components/User";
-import { authOptions } from "@/lib/auth";
 import Heading from "@/components/ui/Heading";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +10,7 @@ import { getSalesCount } from "@/app/actions/getSalesCount";
 import { getStockCount } from "@/app/actions/getStockCount";
 import Overview from "@/components/Overview";
 import { getGraphRevenue } from "@/app/actions/getGraphRevenue";
+import { auth } from "@/auth";
 
 
 interface DashboardPageProps {
@@ -22,7 +21,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
   params
 }) => {
 
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   const totalRevenue = await getTotalRevenue(params.storeId);
   const salesCount = await getSalesCount(params.storeId);
@@ -87,10 +86,6 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
           </CardContent>
         </Card>
       </div>
-      <h2>Client Session</h2>
-      <User />
-      <h2>Server Session</h2>
-      <pre>{JSON.stringify(session)}</pre>
     </div>
   )
 }

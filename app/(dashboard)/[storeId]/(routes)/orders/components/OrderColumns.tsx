@@ -29,15 +29,15 @@ export const columns: ColumnDef<OrderColumn>[] = [
       <div
         className={`${
           row.original.status === 'PENDING'
-          ? 'bg-red-300'
+          ? 'bg-red-300 dark:text-red-700'
             : row.original.status === 'APPROVED'
-            ? 'bg-yellow-300'
+            ? 'bg-yellow-300 dark:text-yellow-700'
             : row.original.status === 'SHIPPED'
-            ? 'bg-blue-300'
+            ? 'bg-blue-300 dark:text-blue-700'
             : row.original.status === 'DELIVERED'
-            ? 'bg-green-300'
+            ? 'bg-green-300 dark:text-green-700'
             : ''
-          } border-4 border-white rounded-full p-2 flex justify-center items-center`}
+          } border-none rounded-md p-1 flex justify-center items-center`}
       >
         {row.original.status}
       </div>

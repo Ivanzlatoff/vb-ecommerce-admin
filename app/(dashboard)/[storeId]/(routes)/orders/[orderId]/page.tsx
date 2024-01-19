@@ -4,6 +4,8 @@ import { OrderItemColumn, columns } from "./components/OrderItemColumn";
 import { DataTable } from "@/components/ui/data-table";
 import Currency from "@/components/ui/Currency";
 import OrderStatus from "./components/OrderStatus";
+import RoleGate from "@/components/auth/RoleGate";
+import { UserRole } from "@prisma/client";
 
 
 const OrderPage = async ({
@@ -40,16 +42,17 @@ const OrderPage = async ({
 
   return (
     <div className="p-10">
-      {order &&
-      <>
-        <OrderDetails 
-          id={order!.id}
-          createdAt={order!.createdAt}
-          name={order!.name}
-          email={order!.email}
-          phone={order!.phone}
-          address={order!.address}
-          isPaid={order!.isPaid}
+      <RoleGate allowedRole={UserRole.ADMIN}>
+        {order &&
+        <>
+          <OrderDetails 
+            id={order!.id}
+            createdAt={order!.createdAt}
+            name={order!.name}
+            email={order!.email}
+            phone={order!.phone}
+            address={order!.address}
+            isPaid={order!.isPaid}
           />
           <div className="flex justify-between my-5">
             <div className="flex justify-start space-x-5 items-center">
@@ -62,6 +65,7 @@ const OrderPage = async ({
           </div>
           <DataTable searchKey="productName" columns={columns} data={formattedOrderItem} />
         </>}
+      </RoleGate>
     </div>
   )
 }

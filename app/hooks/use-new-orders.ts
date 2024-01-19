@@ -14,7 +14,7 @@ const useNewOrders = async (storeId: string) => {
   const newOrders: number = orders.reduce((total, order) => {
     return total + (order.status === "PENDING" ? 1 : 0);
   }, 0);
-  console.log("newOrders => ", newOrders)
+
   return newOrders;
 };
 

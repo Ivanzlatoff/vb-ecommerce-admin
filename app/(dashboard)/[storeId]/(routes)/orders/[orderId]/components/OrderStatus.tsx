@@ -30,7 +30,7 @@ const OrderStatus: React.FC<OrderStatusProps> = ({
   };
 
   const { data: session } = useSession();
-  const userId = session?.user.userId;
+  const userId = session?.user.id;
 
   const handleSubmit = async (selectedValue: Status) => {
     if (userId) {
@@ -64,23 +64,23 @@ const OrderStatus: React.FC<OrderStatusProps> = ({
         <SelectTrigger   
           className={`${
             selectedValue === 'PENDING'
-            ? 'bg-red-300'
+            ? 'bg-red-300 dark:text-red-700'
               : selectedValue === 'APPROVED'
-              ? 'bg-yellow-300'
+              ? 'bg-yellow-300 dark:text-yellow-700'
               : selectedValue === 'SHIPPED'
-              ? 'bg-blue-300'
+              ? 'bg-blue-300 dark:text-blue-700'
               : selectedValue === 'DELIVERED'
-              ? 'bg-green-300'
+              ? 'bg-green-300 dark:text-green-700'
               : ''
-            } border-4 border-white rounded-full`}
+            } border-none border-white rounded-sm`}
           >
           <SelectValue defaultValue={selectedValue} />
         </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="PENDING" className="bg-red-300 m-2">Pending</SelectItem>
-          <SelectItem value="APPROVED" className="bg-yellow-300 m-2">Approved</SelectItem>
-          <SelectItem value="SHIPPED" className="bg-blue-300 m-2">Shipped</SelectItem>
-          <SelectItem value="DELIVERED" className="bg-green-300 m-2">Delivered</SelectItem>
+        <SelectContent className='pr-2'>
+          <SelectItem value="PENDING" className="bg-red-300 m-2 dark:text-red-500">Pending</SelectItem>
+          <SelectItem value="APPROVED" className="bg-yellow-300 m-2 dark:text-yellow-700">Approved</SelectItem>
+          <SelectItem value="SHIPPED" className="bg-blue-300 m-2 dark:text-blue-700">Shipped</SelectItem>
+          <SelectItem value="DELIVERED" className="bg-green-300 m-2 dark:text-green-700">Delivered</SelectItem>
         </SelectContent>
       </Select>
     </div>

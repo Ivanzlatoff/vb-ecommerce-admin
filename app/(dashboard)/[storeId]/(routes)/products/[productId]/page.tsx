@@ -1,5 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import ProductForm from "./components/ProductForm";
+import RoleGate from "@/components/auth/RoleGate";
+import { UserRole } from "@prisma/client";
 
 
 const ProductPage = async ({
@@ -38,12 +40,14 @@ const ProductPage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <ProductForm 
-          initialData={product} 
-          categories={categories}
-          sizes={sizes}
-          colors={colors}
-        />
+        <RoleGate allowedRole={UserRole.ADMIN}>
+          <ProductForm 
+            initialData={product} 
+            categories={categories}
+            sizes={sizes}
+            colors={colors}
+          />
+        </RoleGate>
       </div>
     </div>
   )

@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import CreatedOrUpdated from "@/components/CreatedOrUpdated";
 
 
 const formSchema = z.object({
@@ -81,7 +82,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const action = initialData ? "Save changes" : "Create";
 
   const { data: session } = useSession();
-  const userId = session?.user.userId;
+  const userId = session?.user.id;
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(formSchema),
@@ -120,7 +121,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
         setLoading(false)
       }
     } else {
-      redirect("/auth/sign-in")
+      redirect("/auth/login")
     }
   };
 
@@ -139,7 +140,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
         setOpen(false)
       }
    } else {
-    redirect("/auth/sign-in")
+    redirect("/auth/login")
    }
   };
 
@@ -170,6 +171,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+          <CreatedOrUpdated
+            name={session?.user?.name!}
+            createdAt={initialData?.createdAt!}
+            updatedAt={initialData?.updatedAt!}
+          />
           <FormField 
             control={form.control}
             name="images"

@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { format } from "date-fns";
 
 import { Store } from "@prisma/client";
 import Heading from "@/components/ui/Heading";
@@ -26,6 +27,7 @@ import AlertModal from "@/components/modals/AlertModal";
 import ApiAlert from "@/components/ui/ApiAlert";
 import useOrigin from "@/app/hooks/useOrigin";
 import { useSession } from "next-auth/react";
+import CreatedOrUpdated from "@/components/CreatedOrUpdated";
 
 
 interface SettingsFormProps {
@@ -49,7 +51,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({
   const [loading, setLoading] = useState(false);
 
   const { data: session } = useSession();
-  const userId = session?.user.userId;
+  const userId = session?.user.id;
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
@@ -84,7 +86,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({
         setOpen(false)
       }
     } else {
-      redirect("/auth/sign-in");
+      redirect("/auth/login");
     }
   };
 
@@ -98,7 +100,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({
       />
       <div className="flex items-center justify-between">
         <Heading 
-          title="Settings"
+          title="Store Settings"
           description="Manage store preferences"
         />
         <Button
@@ -137,6 +139,11 @@ const SettingsForm: React.FC<SettingsFormProps> = ({
           </Button>
         </form>
       </Form>
+      <CreatedOrUpdated
+        name={session?.user?.name!}
+        createdAt={initialData.createdAt}
+        updatedAt={initialData.updatedAt}
+      />
       <Separator />
       <ApiAlert 
         title="NEXT_PUBLIC_API_URL" 

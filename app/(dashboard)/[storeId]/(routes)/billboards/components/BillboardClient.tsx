@@ -10,6 +10,8 @@ import { DataTable } from "@/components/ui/data-table";
 import ApiList from "@/components/ui/ApiList";
 
 import { BillboardColumn, columns } from "./BillboardColumns";
+import RoleGate from "@/components/auth/RoleGate";
+import { UserRole } from "@prisma/client";
 
 
 interface BillboardClientProps {

@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { redirect, useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/AlertModal";
 import ImageUpload from "@/components/ui/ImageUpload";
+import CreatedOrUpdated from "@/components/CreatedOrUpdated";
 
 
 const formSchema = z.object({
@@ -53,7 +54,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({
   const action = initialData ? "Save changes" : "Create";
 
   const { data: session } = useSession();
-  const userId = session?.user.userId;
+  const userId = session?.user.id;
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
@@ -81,7 +82,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({
         setLoading(false)
       }
     } else {
-      redirect("/auth/sign-in")
+      redirect("/auth/login")
     }
   };
 
@@ -100,7 +101,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({
         setOpen(false)
       }
    } else {
-    redirect("/auth/sign-in")
+    redirect("/auth/login")
    }
   };
 
@@ -119,11 +120,11 @@ const BillboardForm: React.FC<BillboardFormProps> = ({
         />
         {initialData && (
           <Button
-            disabled={loading}
-            variant="destructive"
-            size="icon"
-            onClick={() => setOpen(true)}
-            >
+          disabled={loading}
+          variant="destructive"
+          size="icon"
+          onClick={() => setOpen(true)}
+          >
             <Trash className="h-4 w-4" />
           </Button>
         )}
@@ -131,6 +132,13 @@ const BillboardForm: React.FC<BillboardFormProps> = ({
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+          {initialData && (
+            <CreatedOrUpdated
+              name={session?.user?.name!}
+              createdAt={initialData?.createdAt!}
+              updatedAt={initialData?.updatedAt!}
+            />
+          )}
           <FormField 
             control={form.control}
             name="imageUrl"

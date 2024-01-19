@@ -6,10 +6,10 @@ interface AuthLayoutProps {
 
 const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <div className='bg-slate-200 p-10 rounded-md'>
-        {children}
-      </div>
+    <div className='h-screen flex items-center justify-center
+      bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))]
+     from-slate-400 to-slate-800'>
+      {children}
     </div>
   );
 };

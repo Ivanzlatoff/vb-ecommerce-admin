@@ -1,5 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import ColorForm from "./components/ColorForm";
+import RoleGate from "@/components/auth/RoleGate";
+import { UserRole } from "@prisma/client";
 
 
 const ColorPage = async ({
@@ -16,7 +18,9 @@ const ColorPage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <ColorForm initialData={color} />
+        <RoleGate allowedRole={UserRole.ADMIN}>
+          <ColorForm initialData={color} />
+        </RoleGate>
       </div>
     </div>
   )

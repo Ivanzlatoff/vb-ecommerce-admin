@@ -1,16 +1,15 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { hash } from "bcrypt";
 import * as z from "zod";
 
-import { authOptions } from "@/lib/auth";
 import prismadb from "@/lib/prismadb";
+import { auth } from "@/auth";
 
 
 // Define a schema for input validation
 const userSchema = z
   .object({
-    username: z.string().min(1, 'Username is required').max(100),
+    name: z.string().min(1, 'Username is required').max(100),
     email: z.string().min(1, 'Email is required').email('Invalid email'),
     password: z
       .string()
@@ -21,7 +20,7 @@ const userSchema = z
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, username, password } = userSchema.parse(body);
+    const { email, name, password } = userSchema.parse(body);
 
     // check if email already exists
     const existingUserByEmail = await prismadb.user.findUnique({
@@ -33,18 +32,18 @@ export async function POST(req: Request) {
     }
 
     // check if username already exists
-    const existingUserByUsername = await prismadb.user.findUnique({
-      where: { username: username }
-    });
+    // const existingUserByUsername = await prismadb.user.findUnique({
+    //   where: { username: username }
+    // });
 
-    if(existingUserByUsername) {
-      return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
-    }
+    // if(existingUserByUsername) {
+    //   return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
+    // }
 
     const hashedPassword = await hash(password, 10);
     const newUser = await prismadb.user.create({
       data: {
-        username,
+        name,
         email,
         password: hashedPassword
       }
@@ -58,7 +57,7 @@ export async function POST(req: Request) {
 }
 
 export async function GET (req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return NextResponse.json({ authenticated: !!session });
 }
