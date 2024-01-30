@@ -30,6 +30,36 @@ export async function GET(
   }
 };
 
+export async function PATCH(
+  req: Request,
+  { params }: { params: { storeId: string, orderId: string}}
+) {
+  try {
+    const session = await auth();
+    const userId = session?.user.id;
+    const body = await req.json();
+
+    const { selectedValue } = body
+
+    if (!userId) {
+      return new NextResponse("Unauthenticated", { status: 401 })
+    }
+
+    const order = await prismadb.order.update({
+      where: {
+        id: params.orderId,
+      },
+      data: {
+        status: selectedValue
+      }
+    })
+
+    return NextResponse.json(order);
+  } catch (error) {
+    console.log('[ORDER_PATCH]', error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+};
 
 export async function DELETE(
   req: Request,

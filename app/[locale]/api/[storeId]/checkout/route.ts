@@ -14,6 +14,7 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "https://vb-ecommerce-store.vercel.app",
   "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-type, Authorization",
+  "Accept-Language": "en-US"
 };
 
 export async function OPTIONS() {
