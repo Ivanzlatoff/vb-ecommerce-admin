@@ -39,8 +39,9 @@ const OrderStatus: React.FC<OrderStatusProps> = ({
         setLoading(true);
         await axios.patch(`/api/${params.storeId}/orders/${params.orderId}`, { selectedValue })
         router.refresh();
-        router.push(`/${params.storeId}/orders`);
         toast.success("Status updated.")
+        router.push(`/${params.storeId}/orders`);
+        router.refresh();
       } catch (error) {
         toast.error("Something went wrong.")
       } finally {
