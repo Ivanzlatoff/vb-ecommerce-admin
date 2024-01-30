@@ -1,0 +1,9 @@
+{
+  "create_account": "Створити обліковий запис",
+  "already_have_account": "У вас вже є обліковий запис?",
+  "name": "Ім'я",
+  "name_placeholder": "Микола Петренко",
+  "email": "Електронна пошта",
+  "email_placeholder": "mykola.petrenko@example.com",
+  "password": "Пароль"
+}

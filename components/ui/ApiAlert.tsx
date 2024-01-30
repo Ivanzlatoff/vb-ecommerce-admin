@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 
 interface ApiAlertProps {
@@ -30,11 +31,12 @@ const ApiAlert: React.FC<ApiAlertProps> = ({
   description,
   variant = "public"
 }) => {
+  const { t } = useTranslation(['api-alert'])
   const [copied, setCopied] = useState(false);
 
   const onCopy = () => {
     navigator.clipboard.writeText(description);
-    toast.success("API Route copied to the clipboard.");
+    toast.success(t('API_copied'));
     setCopied(true) 
     setTimeout(() => {
       setCopied(false);

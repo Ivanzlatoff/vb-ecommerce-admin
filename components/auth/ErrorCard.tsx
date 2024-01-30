@@ -1,12 +1,15 @@
 import CardWrapper from "@/components/auth/CardWrapper";
 import { AlertTriangleIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 
 
 const ErrorCard = () => {
+  const { t } = useTranslation();
+
   return (
     <CardWrapper
-      headerLabel="Oops! Something went wrong!"
+      headerLabel={t('common:wrong')}
       backButtonHref="/auth/login"
       backButtonLabel="Back to login"
     >

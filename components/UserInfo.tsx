@@ -1,6 +1,7 @@
 import { ExtendedUser } from "@/next-auth";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 
 interface UserInfoProps {
@@ -12,6 +13,8 @@ const UserInfo = ({
   user,
   label,
 }: UserInfoProps) => {
+  const { t } = useTranslation(['user-info']);
+
   return (
     <Card className="w-[600px] shadow-md">
       <CardHeader>
@@ -22,7 +25,7 @@ const UserInfo = ({
       <CardContent className="space-y-4">
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
           <p className="text-sm font-medium">
-            ID
+            {t('id')}
           </p>
           <p className="truncate text-xs max-w-[180px]">
             {user?.id}
@@ -30,7 +33,7 @@ const UserInfo = ({
         </div>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
           <p className="text-sm font-medium">
-            Name
+            {t('name')}
           </p>
           <p className="truncate text-xs max-w-[180px]">
             {user?.name}
@@ -38,7 +41,7 @@ const UserInfo = ({
         </div>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
           <p className="text-sm font-medium">
-            Email
+            {t('email')}
           </p>
           <p className="truncate text-xs max-w-[180px]">
             {user?.email}
@@ -46,7 +49,7 @@ const UserInfo = ({
         </div>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
           <p className="text-sm font-medium">
-            Role
+            {t('role')}
           </p>
           <p className="truncate text-xs max-w-[180px]">
             {user?.role}
@@ -54,7 +57,7 @@ const UserInfo = ({
         </div>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
           <p className="text-sm font-medium">
-            Two Factor Authentication
+            {t('2factor')}
           </p>
           <Badge 
             variant={user?.isTwoFactorEnabled ? "success" : "destructive"}

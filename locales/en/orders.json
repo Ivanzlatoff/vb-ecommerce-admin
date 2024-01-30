@@ -1,0 +1,18 @@
+{
+  "order_id": "Order Id",
+  "created": "Created",
+  "order_details": "Order details",
+  "email": "Email",
+  "phone": "Phone",
+  "address": "Address",
+  "paid": "Paid",
+  "yes": "Yes",
+  "no": "No",
+  "grand_total": "Grand Total",
+  "update_status": "Update Status",
+  "status": "Status",
+  "pending": "Pending",
+  "approved": "Approved",
+  "shipped": "Shipped",
+  "delivered": "Delivered"
+}

@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 
-import useStoreModal from "@/app/hooks/useStoreModal";
+import useStoreModal from "@/app/[locale]/hooks/useStoreModal";
 import { Modal } from "@/components/ui/modal";
 import { 
   Form, 
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 
 const formSchema = z.object({
@@ -27,6 +28,7 @@ const formSchema = z.object({
 });
 
 const StoreModal = () => {
+  const { t } = useTranslation(['common', 'user-info']);
   const storeModal = useStoreModal();
 
   const [loading, setLoading] = useState(false);
@@ -57,8 +59,8 @@ const StoreModal = () => {
 
   return (
     <Modal
-      title="Create store"
-      description="Add a new store to manage products and categories"
+      title={t('create_store')}
+      description={t('add_new_store')}
       isOpen={storeModal.isOpen}
       onClose={storeModal.onClose}
     >
@@ -71,11 +73,11 @@ const StoreModal = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>{t('user-info:name')}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={loading}
-                        placeholder="E-Commerce"
+                        placeholder={t('e_commerce')}
                         {...field}
                       />
                     </FormControl>
@@ -89,9 +91,9 @@ const StoreModal = () => {
                   variant="outline"
                   onClick={storeModal.onClose}
                 >
-                  Cancel
+                  {t('cancel')}
                 </Button>
-                <Button disabled={loading} type="submit">Continue</Button>
+                <Button disabled={loading} type="submit">{t('continue')}</Button>
               </div>
             </form>
           </Form>

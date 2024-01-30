@@ -22,9 +22,11 @@ import { Button } from "@/components/ui/button";
 import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
 import { newPassword } from "@/actions/new-password";
+import { useTranslation } from "react-i18next";
 
 
 const NewPasswordForm = () => {
+  const { t } = useTranslation('new-password');
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -53,8 +55,8 @@ const NewPasswordForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Enter a new password"
-      backButtonLabel="Back to login"
+      headerLabel={t('enter_new_password')}
+      backButtonLabel={t('back_to_login')}
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -68,7 +70,7 @@ const NewPasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t('password')}</FormLabel>
                   <FormControl>
                     <Input 
                       {...field}
@@ -88,7 +90,7 @@ const NewPasswordForm = () => {
             type="submit"
             className="w-full"
           >
-            Reset password
+            {t('reset')}
           </Button>
         </form>
       </Form>

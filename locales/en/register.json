@@ -1,0 +1,9 @@
+{
+  "create_account": "Create an account",
+  "already_have_account": "Already have an account?",
+  "name": "Name",
+  "name_placeholder": "John Doe",
+  "email": "Email",
+  "email_placeholder": "john.doe@example.com",
+  "password": "Password"
+}

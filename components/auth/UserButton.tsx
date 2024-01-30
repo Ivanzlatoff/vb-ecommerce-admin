@@ -2,6 +2,7 @@
 
 import { FaUser } from "react-icons/fa";
 import { LogOut } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import {
   DropdownMenu,
@@ -22,6 +23,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import LogoutButton from "@/components/auth/LogoutButton";
 
 const UserButton = () => {
+  const { t } = useTranslation(['common']);
   const user = useCurrentUser();
 
   return (
@@ -38,7 +40,7 @@ const UserButton = () => {
         <LogoutButton>
           <DropdownMenuItem>
             <LogOut className="h-4 w-4 mr-2" />
-            Logout
+            {t('log_out')}
           </DropdownMenuItem>
         </LogoutButton>
       </DropdownMenuContent>

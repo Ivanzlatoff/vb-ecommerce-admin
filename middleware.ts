@@ -1,5 +1,8 @@
+import { NextRequest } from "next/server";
 import NextAuth from "next-auth";
+import { i18nRouter } from "next-i18n-router";
 
+import i18nConfig from "./i18nConfig";
 import authConfig from "@/auth.config";
 import {
   DEFAULT_LOGIN_REDIRECT,
@@ -46,6 +49,10 @@ export default auth((req) => {
 
   return null;
 });
+
+export function middleware(request: NextRequest) {
+  return i18nRouter(request, i18nConfig);
+}
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {

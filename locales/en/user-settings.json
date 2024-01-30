@@ -1,0 +1,15 @@
+{
+  "user_settings": "User Settings",
+  "name": "Name",
+  "name_placeholder": "John Doe",
+  "email": "Email",
+  "email_placeholder": "john.doe@mail.com",
+  "password": "Password",
+  "new_password": "New Password",
+  "role": "Role",
+  "admin": "Admin",
+  "user": "User",
+  "2FA": "Two Factor Authentication",
+  "enable_2FA": "Enable two factor authentication for your account",
+  "save": "Save"
+}

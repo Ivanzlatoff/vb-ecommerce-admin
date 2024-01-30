@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
 
 import { RegisterSchema } from "@/schemas";
 import {
@@ -24,6 +25,8 @@ import { register } from "@/actions/register";
 
 
 const RegisterForm = () => {
+  const { t } = useTranslation(['common']);
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition()
@@ -46,13 +49,14 @@ const RegisterForm = () => {
           setError(data.error);
           setSuccess(data.success);
         })
+        .catch(() => setError(t('wrong')));
     })
   }
 
   return (
     <CardWrapper
-      headerLabel="Create an account"
-      backButtonLabel="Already have an account?"
+      headerLabel={t('create_account')}
+      backButtonLabel={t('already_have_account')}
       backButtonHref="/auth/login"
       showSocial
     >
@@ -67,12 +71,12 @@ const RegisterForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input 
                       {...field}
                       disabled={isPending} 
-                      placeholder="john Doe" 
+                      placeholder={t('name_placeholder')} 
                     />
                   </FormControl>
                   <FormMessage className="mt-2" />
@@ -84,12 +88,12 @@ const RegisterForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input 
                       {...field}
                       disabled={isPending} 
-                      placeholder="john.doe@example.com" 
+                      placeholder={t('email_placeholder')}
                       type="email" 
                     />
                   </FormControl>
@@ -102,7 +106,7 @@ const RegisterForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t('password')}</FormLabel>
                   <FormControl>
                     <Input 
                       {...field}
@@ -123,7 +127,7 @@ const RegisterForm = () => {
             type="submit"
             className="w-full"
           >
-            Create an account
+            {t('create_account')}
           </Button>
         </form>
       </Form>

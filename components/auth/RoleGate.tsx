@@ -5,6 +5,7 @@ import FormError from "../FormError";
 
 import { useCurrentRole } from "@/hooks/use-current-role";
 import { UserRole } from "@prisma/client";
+import { useTranslation } from 'react-i18next';
 
 
 interface RoleGateProps {
@@ -16,11 +17,12 @@ const RoleGate = ({
   children,
   allowedRole
 }: RoleGateProps) => {
+  const { t } = useTranslation('common')
   const role = useCurrentRole();
 
   if (role !== allowedRole) {
     return (
-      <FormError message="You do not have permission to view this content!" />
+      <FormError message={t('role_content')} />
     )
   }
 

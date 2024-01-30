@@ -18,16 +18,22 @@ import {
 } from "@/lib/email";
 import prismadb from "@/lib/prismadb";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confimation";
+import initTranslations from "@/app/i18n";
 
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
+  currentLocale: string,
   callbackUrl?: string | null
 ) => {
+  const { t } = await initTranslations({
+    locale: currentLocale,
+    namespaces: ['login']
+  })
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { error: t('invalid_fields') };
   }
 
   const { email, password, code } = validatedFields.data;
@@ -35,7 +41,7 @@ export const login = async (
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: "Email does not exist!" }
+    return { error: t('email_not_exist') }
   }
 
   if (!existingUser.emailVerified) {
@@ -46,7 +52,7 @@ export const login = async (
       verificationToken.token
     );
 
-    return { success: "Confirmation email sent!" };
+    return { success: t('conf_email_sent') };
   }
 
   if (existingUser.isTwoFactorEnabled) {
@@ -55,11 +61,11 @@ export const login = async (
       const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
 
       if (!twoFactorToken) {
-        return { error: "Invalid code!" };
+        return { error: t('invalid_code') };
       }
 
       if (twoFactorToken.token !== code) {
-        return { error: "Invalid code!" };
+        return { error: t('invalid_code') };
       }
 
       const hasExpired = new Date(twoFactorToken.expires) < new Date();
@@ -69,7 +75,7 @@ export const login = async (
       });
 
       if (hasExpired) {
-        return { error: "Code expired!" };
+        return { error: t('code_exp') };
       }
 
       const existingConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
@@ -107,9 +113,9 @@ export const login = async (
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid Credentials!" }
+          return { error: t('invalid_cred') }
         default:
-          return { error: "Something went wrong!" }
+          return { error: t('wrong') }
       }
     }
 

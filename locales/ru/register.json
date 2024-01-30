@@ -1,0 +1,9 @@
+{
+  "create_account": "Создайте учетную запись",
+  "already_have_account": "У вас уже есть учетная запись?",
+  "name": "Имя",
+  "name_placeholder": "Иван Иванов",
+  "email": "Электронная почта",
+  "email_placeholder": "ivan.ivanov@example.com",
+  "password": "Пароль"
+}

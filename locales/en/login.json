@@ -1,0 +1,17 @@
+{
+  "heading": "Admin Dashboard",
+  "subheading": "Welcome back",
+  "email": "Email",
+  "email_placeholder": "john.doe@example.com",
+  "password": "Password",
+  "forgot_password": "Forgot password?",
+  "login": "Login",
+  "no_account": "Don't have an account?",
+  "invalid_fields": "Invalid fields!",
+  "email_not_exist": "Email does not exist!",
+  "conf_email_sent": "Confirmation email sent!",
+  "invalid_code": "Invalid code!",
+  "code_exp": "Code expired!",
+  "invalid_cred": "Invalid Credentials!",
+  "wrong": "Something went wrong!"
+}

@@ -1,0 +1,17 @@
+{
+  "heading": "Панель Адміністратора",
+  "subheading": "Раді вас бачити",
+  "email": "Електронна пошта",
+  "email_placeholder": "john.doe@example.com",
+  "password": "Пароль",
+  "forgot_password": "Забули пароль?",
+  "login": "Увійти",
+  "no_account": "Не зареєстровані?",
+  "invalid_fields": "Невірні поля!",
+  "email_not_exist": "Електронна пошта не існує!",
+  "conf_email_sent": "Підтвердження надіслано на електронну пошту!",
+  "invalid_code": "Невірний код!",
+  "code_exp": "Код просрочений!",
+  "invalid_cred": "Невірні облікові дані!",
+  "wrong": "Щось пішло не так!"
+}

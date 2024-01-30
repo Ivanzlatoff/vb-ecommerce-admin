@@ -1,0 +1,18 @@
+{
+  "order_id": "Id заказа",
+  "created": "Создан",
+  "order_details": "Детали заказа",
+  "email": "Электронная почта",
+  "phone": "Телефон",
+  "address": "Адрес",
+  "paid": "Оплачен",
+  "yes": "Да",
+  "no": "Нет",
+  "grand_total": "Всего",
+  "update_status": "Обновить статус",
+  "status": "Статус",
+  "pending": "В ожидании",
+  "approved": "Утвержден",
+  "shipped": "Отправлен",
+  "delivered": "Доставлен"
+}

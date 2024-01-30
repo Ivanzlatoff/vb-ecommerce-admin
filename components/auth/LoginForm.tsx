@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 import { LoginSchema } from "@/schemas";
 import {
@@ -26,16 +27,20 @@ import { login } from "@/actions/login";
 
 
 const LoginForm = () => {
+  const { t, i18n } = useTranslation(['login', 'common']);
+  const currentLocale = i18n.language;
+
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
-    ? "Email already in use with different provider!"
+    ? t('common:email_in_use')
     : "";
 
   const [showTwoFactor, setShowTwoFactor] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition()
+
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -49,7 +54,7 @@ const LoginForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values, callbackUrl)
+      login(values, currentLocale, callbackUrl)
         .then((data) => {
           if (data?.error) {
             form.reset();
@@ -65,14 +70,14 @@ const LoginForm = () => {
             setShowTwoFactor(true);
           }
         })
-          .catch(() => setError("Something went wrong"));
+          .catch(() => setError(t('common:wrong')));
     });
   }
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Don't have an account?"
+      headerLabel={t('login:subheading')}
+      backButtonLabel={t('login:no_account')}
       backButtonHref="/auth/register"
       showSocial
     >
@@ -88,7 +93,7 @@ const LoginForm = () => {
               name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Two Factor Code</FormLabel>
+                  <FormLabel>{t('common:2FCode')}</FormLabel>
                   <FormControl>
                     <Input 
                       {...field}
@@ -108,7 +113,7 @@ const LoginForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t('login:email')}</FormLabel>
                     <FormControl>
                       <Input 
                         {...field}
@@ -125,7 +130,7 @@ const LoginForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t('login:password')}</FormLabel>
                     <FormControl>
                       <Input 
                         {...field}
@@ -140,7 +145,7 @@ const LoginForm = () => {
                       className="px-0 font-normal"
                       >
                       <Link href="/auth/reset">
-                        Forgot password?
+                        {t('login:forgot_password')}
                       </Link>
                     </Button>
                     <FormMessage />
@@ -157,7 +162,7 @@ const LoginForm = () => {
             type="submit"
             className="w-full"
           >
-            {showTwoFactor ? "Confirm" : "Login"}
+            {showTwoFactor ? t('common:confirm') : t('login:login')}
           </Button>
         </form>
       </Form>

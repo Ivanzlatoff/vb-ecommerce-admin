@@ -1,0 +1,17 @@
+{
+  "heading": "Панель администратора",
+  "subheading": "Рады вас видеть",
+  "email": "Электронная почта",
+  "email_placeholder": "john.doe@example.com",
+  "password": "Пароль",
+  "forgot_password": "Забыли пароль?",
+  "login": "Войти",
+  "no_account": "Не зарегестрированы?",
+  "invalid_fields": "Недопустимые поля!",
+  "email_not_exist": "Электронная почта не существует!",
+  "conf_email_sent": "Подтверждение отправлено по электронной почте!",
+  "invalid_code": "Неверный код!",
+  "code_exp": "Код просрочен!",
+  "invalid_cred": "Неверные учетные данные!",
+  "wrong": "Что-то пошло не так!"
+}

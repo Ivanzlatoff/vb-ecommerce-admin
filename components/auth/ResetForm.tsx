@@ -21,10 +21,11 @@ import { Button } from "@/components/ui/button";
 import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
 import { reset } from "@/actions/reset";
+import { useTranslation } from "react-i18next";
 
 
 const ResetForm = () => {
-
+  const { t } = useTranslation(['common'])
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition()
@@ -50,8 +51,8 @@ const ResetForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Forgot your password?"
-      backButtonLabel="Back to login"
+      headerLabel={t('forgot_password')}
+      backButtonLabel={t('back_to_login')}
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -65,12 +66,12 @@ const ResetForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input 
                       {...field}
                       disabled={isPending} 
-                      placeholder="john.doe@example.com" 
+                      placeholder={t('email_placeholder')} 
                       type="email" />
                   </FormControl>
                   <FormMessage className="mt-2" />
@@ -85,7 +86,7 @@ const ResetForm = () => {
             type="submit"
             className="w-full"
           >
-            Send reset email
+            {t('reset_email')}
           </Button>
         </form>
       </Form>

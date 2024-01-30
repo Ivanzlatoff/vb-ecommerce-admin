@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 
-import useOrigin from "@/app/hooks/useOrigin";
+import useOrigin from "@/app/[locale]/hooks/useOrigin";
 import ApiAlert from "@/components/ui/ApiAlert";
 
 

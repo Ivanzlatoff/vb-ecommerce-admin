@@ -6,6 +6,7 @@ import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary"
 
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 
 interface ImageUploadProps {
@@ -21,6 +22,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onRemove,
   value
 }) => {
+  const { t } = useTranslation(['common']);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onClick={onClick}
             >
               <ImagePlus className="h-4 w-4 mr-2" />
-              Upload an Image
+              {t('upload_image')}
             </Button>
           )
         }}

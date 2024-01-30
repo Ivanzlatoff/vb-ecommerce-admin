@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { useSearchParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 import { newVerification } from "@/actions/new-verification";
 import CardWrapper from "./CardWrapper";
@@ -11,6 +12,7 @@ import FormSuccess from "@/components/FormSuccess";
 
 
 const NewVerificationForm = () => {
+  const { t } = useTranslation(['new-password', 'common']);
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const searchParams = useSearchParams();
@@ -21,7 +23,7 @@ const NewVerificationForm = () => {
     if (success || error) return;
 
     if (!token) {
-      setError("Missing token!");
+      setError(t('missing_token'));
       return;
     }
 
@@ -31,9 +33,9 @@ const NewVerificationForm = () => {
         setError(data.error);
       })
       .catch(() => {
-        setError("Something went wrong!");
+        setError(t('common:wrong'));
       });
-  }, [token, success, error]);
+  }, [token, success, error, t]);
 
   useEffect(() => {
     onSubmit();
@@ -41,8 +43,8 @@ const NewVerificationForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Confirm your verification"
-      backButtonLabel="Back to Login"
+      headerLabel={t('confirm_verification')}
+      backButtonLabel={t('back_to_login')}
       backButtonHref="/auth/login"
     >
       <div className="flex items-center w-full justify-center">

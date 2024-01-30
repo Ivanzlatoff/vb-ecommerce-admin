@@ -1,0 +1,11 @@
+{
+  "store_updated": "Store updated",
+  "wrong": "Something went wrong.",
+  "store_deleted": "Store deleted.",
+  "del_prod_and_cat_first": "Make sure you removed all products and categories first.",
+  "store_settings": "Store Settings",
+  "manage_store_preferences": "Manage store preferences",
+  "name": "Name",
+  "store_name": "Store name",
+  "save_changes": "Save changes"
+}

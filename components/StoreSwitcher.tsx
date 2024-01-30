@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-import useStoreModal from "@/app/hooks/useStoreModal";
+import useStoreModal from "@/app/[locale]/hooks/useStoreModal";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Store } from "@prisma/client";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ import {
   CommandList, 
   CommandSeparator
 } from "@/components/ui/command";
+import { useTranslation } from "react-i18next";
 
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>;
@@ -30,6 +31,7 @@ const StoreSwitcher = ({
   className,
   items=[]
 }: StoreSwitcherProps) => {
+  const { t } = useTranslation('common');
   const storeModal = useStoreModal();
   const params = useParams();
   const router = useRouter();
@@ -67,9 +69,9 @@ const StoreSwitcher = ({
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandList>
-            <CommandInput placeholder="Search store..." />
-            <CommandEmpty>No store found.</CommandEmpty>
-            <CommandGroup heading="Stores">
+            <CommandInput placeholder={t('search_store')} />
+            <CommandEmpty>{t('no_store_found')}</CommandEmpty>
+            <CommandGroup heading={t('stores')}>
               {formattedItems.map((store) => (
                 <CommandItem
                   key={store.value}
@@ -100,7 +102,7 @@ const StoreSwitcher = ({
                 }}
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
-                Create Store
+                {t('create_store')}
               </CommandItem>
             </CommandGroup>
           </CommandList>

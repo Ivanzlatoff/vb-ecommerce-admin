@@ -1,0 +1,11 @@
+{
+  "allowed_API": "Allowed API Route!",
+  "fordbidden_API": "Forbidden API Route!",
+  "admin": "Admin",
+  "allowed_content": "You are allowed to see this content",
+  "admin_only_API": "Admin-only API Route",
+  "test": "Click to test",
+  "admin_only_server": "Admin-only Server Action",
+  "allowed": "Allowed!",
+  "fordbidden": "Fordbidden!"
+}
