@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
@@ -28,6 +28,16 @@ const CellAction: React.FC<CellActionsProps> = ({
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (loading) {
+      // Start loading indicator
+      document.body.style.cursor = 'wait';
+    } else {
+      // Reset loading indicator
+      document.body.style.cursor = 'auto';
+    }
+  }, [loading]);
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
