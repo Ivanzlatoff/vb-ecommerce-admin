@@ -171,11 +171,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-          <CreatedOrUpdated
+          {initialData &&  <CreatedOrUpdated
             name={session?.user?.name!}
             createdAt={initialData?.createdAt!}
             updatedAt={initialData?.updatedAt!}
-          />
+          />}
           <FormField 
             control={form.control}
             name="images"
@@ -356,7 +356,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                           return (
                             <FormItem
                               key={category.id}
-                              className="flex flex-row items-start space-x-3 space-y-0 h-6 hover:bg-gray-100"
+                              className="flex flex-row items-start space-x-3 space-y-0 h-6 hover:bg-gray-100 hover:text-black"
                             >
                               <FormControl>
                                 <Checkbox
