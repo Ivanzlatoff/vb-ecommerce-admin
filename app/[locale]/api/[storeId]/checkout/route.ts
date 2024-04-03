@@ -28,7 +28,7 @@ export async function POST(
   const { cartItems } = await req.json();
 
   if (cartItems.length === 0) {
-    return new NextResponse("At least one product is required.", { status: 400 });
+    return new NextResponse("Потрібен принаймні один продукт.", { status: 400 });
   }
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
