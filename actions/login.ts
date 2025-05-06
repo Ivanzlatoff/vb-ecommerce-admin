@@ -37,7 +37,9 @@ export const login = async (
   }
 
   const { email, password, code } = validatedFields.data;
+
   const existingUser = await getUserByEmail(email);
+
   if (!existingUser || !existingUser.email || !existingUser.password) {
     return { error: t('email_not_exist') }
   }
