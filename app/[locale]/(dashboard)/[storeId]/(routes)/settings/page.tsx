@@ -18,6 +18,7 @@ interface SettingsPageProps {
 const SettingsPage: React.FC<SettingsPageProps> = async ({
   params
 }) => {
+  const { storeId } = await Promise.resolve(params);
   const session = await auth();
   const userId = session?.user.id;
 
@@ -27,7 +28,7 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
 
   const store = await prismadb.store.findFirst({
     where: {
-      id: params.storeId,
+      id: storeId,
       userId
     }
   });

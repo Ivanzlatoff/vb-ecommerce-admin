@@ -13,9 +13,10 @@ const ProductsPage = async ({
 }: {
   params: { storeId: string }
 }) => {
+  const { storeId } = await Promise.resolve(params);
   const products = await prismadb.product.findMany({
     where: {
-      storeId: params.storeId
+      storeId: storeId
     },
     include: {
       categories: true,
