@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { i18nRouter } from "next-i18n-router";
-import i18nConfig from "./i18nConfig";
-
+import { NextRequest } from "next/server";
 import NextAuth from "next-auth";
+import { i18nRouter } from "next-i18n-router";
+
+import i18nConfig from "./i18nConfig";
 import authConfig from "@/auth.config";
 import {
   DEFAULT_LOGIN_REDIRECT,
@@ -11,28 +11,26 @@ import {
   publicRoutes
 } from "@/routes";
 
+
 const { auth } = NextAuth(authConfig);
 
-export async function middleware(req: NextRequest) {
-  // i18n redirect check — return early if a locale redirect is needed
-  if (!req.nextUrl.pathname.startsWith('/api/auth')) {
-    const localeRedirect = i18nRouter(req, i18nConfig);
-    if (localeRedirect) return localeRedirect;
-  }
-
+export default auth((req) => {
   const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
-  const session = await auth(req);
-  const isLoggedIn = !!session?.user;
+  if (isApiAuthRoute) {
+    return null;
+  }
 
-  if (isApiAuthRoute) return NextResponse.next();
-
-  if (isAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return null;
   }
 
   if (!isLoggedIn && !isPublicRoute) {
@@ -41,24 +39,24 @@ export async function middleware(req: NextRequest) {
       callbackUrl += nextUrl.search;
     }
 
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl)
 
-    return NextResponse.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
-    );
+    return Response.redirect(new URL(
+      `/auth/login?callbackUrl=${encodedCallbackUrl}`,
+      nextUrl
+    ));
   }
 
-  return NextResponse.next();
+  return null;
+});
+
+export function middleware(request: NextRequest) {
+  return i18nRouter(request, i18nConfig);
 }
 
-// export const config = {
-//   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-// };
-
+// Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: [
-    '/((?!api/auth|.+\\.[\\w]+$|_next).*)',
-    '/',
-    '/(api|trpc)(.*)',
-  ],
-};
+  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+}
+
+

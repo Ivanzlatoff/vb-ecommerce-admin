@@ -34,15 +34,17 @@ const i18nNamespaces = [
   'settings'
 ];
 
-export default async function RootLayout({
-  children,
-  params: { locale }
-}: {
-  children: React.ReactNode,
-  params: { locale: string}
-}) {
+export default async function RootLayout(
+  {
+    children, 
+    params 
+  }: 
+  { 
+    children: React.ReactNode; 
+    params: Promise<{ locale: string }> 
+  }) {
+  const { locale } = await params;
   const session = await auth();
-  console.log({session})
   const { resources } = await initTranslations({
     locale, 
     namespaces: i18nNamespaces

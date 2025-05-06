@@ -82,7 +82,7 @@ export async function POST(req: Request) {
 
     const productDetails = order.orderItems.map(({ product, quantity }) => {
       return (
-          `Продукт: ${product.name} ${product.color.name}
+          `  Продукт: ${product.name} ${product.color.name}
           Кількість: ${quantity} кг
           Ціна за 100 кг: ${product.price} грн
           Усього за товар: ${quantity * Number(product.price)} грн

@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { loginWithGithub } from "@/actions/login";
 
 
 const Social = () => {
@@ -33,7 +34,8 @@ const Social = () => {
         size="lg"
         className="w-full"
         variant="outline"
-        onClick={() => onClick("github")}
+        // onClick={() => onClick("github")}
+        onClick={() => loginWithGithub()}
       >
         <FaGithub className="h-5 w-5" />
       </Button>

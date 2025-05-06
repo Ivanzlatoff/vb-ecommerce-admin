@@ -5,7 +5,7 @@ import prismadb from '@/lib/prismadb';
 import Navbar from '@/components/Navbar';
 
 
-async function DashboardLayout({
+export default async function DashboardLayout({
   children,
   params,
 }: {
@@ -13,13 +13,14 @@ async function DashboardLayout({
   params: { locale: string, storeId: string }
 }) {
   const session = await auth();
+  const { locale, storeId } = await Promise.resolve(params);
   if (!session?.user) {
     redirect('/auth/login')
   }
 
   const store = await prismadb.store.findFirst({
     where: {
-      id: params.storeId,
+      id: storeId,
       userId: session?.user.id
     }
   });
@@ -43,11 +44,10 @@ async function DashboardLayout({
 
   return (
     <>
-      <Navbar locale={params.locale} newOrders={newOrders} />
+      <Navbar locale={locale} newOrders={newOrders} />
       {children}
     </>
   )
 }
 
-export default DashboardLayout
 

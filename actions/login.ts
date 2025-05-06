@@ -20,6 +20,9 @@ import prismadb from "@/lib/prismadb";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confimation";
 import initTranslations from "@/app/i18n";
 
+export const loginWithGithub = async () => {
+  await signIn("github", {redirectTo: "/"})
+}
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
