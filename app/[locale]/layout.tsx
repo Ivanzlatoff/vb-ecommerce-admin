@@ -42,6 +42,7 @@ export default async function RootLayout({
   params: { locale: string}
 }) {
   const session = await auth();
+  console.log({session})
   const { resources } = await initTranslations({
     locale, 
     namespaces: i18nNamespaces

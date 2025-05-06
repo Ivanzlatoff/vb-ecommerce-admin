@@ -37,9 +37,7 @@ export const login = async (
   }
 
   const { email, password, code } = validatedFields.data;
-
   const existingUser = await getUserByEmail(email);
-
   if (!existingUser || !existingUser.email || !existingUser.password) {
     return { error: t('email_not_exist') }
   }
@@ -111,7 +109,7 @@ export const login = async (
     })
   } catch (error) {
     if (error instanceof AuthError) {
-      switch (error.type) {
+      switch (error.name) {
         case "CredentialsSignin":
           return { error: t('invalid_cred') }
         default:

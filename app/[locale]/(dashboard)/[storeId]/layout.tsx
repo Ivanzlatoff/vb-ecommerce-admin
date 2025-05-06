@@ -13,7 +13,6 @@ async function DashboardLayout({
   params: { locale: string, storeId: string }
 }) {
   const session = await auth();
-
   if (!session?.user) {
     redirect('/auth/login')
   }

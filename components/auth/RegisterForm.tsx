@@ -29,7 +29,7 @@ const RegisterForm = () => {
 
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),

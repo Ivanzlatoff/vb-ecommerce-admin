@@ -4,6 +4,7 @@ import prismadb from "@/lib/prismadb";
 
 import BillboardClient from "./components/BillboardClient";
 import { BillboardColumn } from "./components/BillboardColumns";
+import { auth } from "@/auth";
 
 
 
