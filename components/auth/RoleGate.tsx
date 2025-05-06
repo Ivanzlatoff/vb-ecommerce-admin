@@ -19,7 +19,7 @@ const RoleGate = ({
 }: RoleGateProps) => {
   const { t } = useTranslation('common')
   const role = useCurrentRole();
-
+  console.log({role})
   if (role !== allowedRole) {
     return (
       <FormError message={t('role_content')} />
