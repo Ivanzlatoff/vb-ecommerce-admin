@@ -9,9 +9,10 @@ const ColorPage = async ({
 }: {
   params: { colorId: string }
 }) => {
+  const { colorId } = await Promise.resolve(params);
   const color = await prismadb.color.findUnique({
     where: {
-      id: params.colorId
+      id: colorId
     }
   });
 

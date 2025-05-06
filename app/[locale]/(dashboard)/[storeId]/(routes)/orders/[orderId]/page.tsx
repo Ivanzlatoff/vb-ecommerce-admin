@@ -14,15 +14,15 @@ const OrderPage = async ({
 }: {
   params: { orderId: string, storeId: string, locale: string }
 }) => {
-
+  const { orderId, storeId, locale } = await Promise.resolve(params);
   const { t } = await initTranslations({
-    locale: params.locale,
+    locale: locale,
     namespaces: ['orders']
   });
 
   const order = await prismadb.order.findUnique({
     where: {
-      id: params.orderId
+      id: orderId
     },
     include: {
       orderItems: {
