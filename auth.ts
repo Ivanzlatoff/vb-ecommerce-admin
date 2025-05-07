@@ -10,7 +10,7 @@ import { getAccountByUserId } from "./data/account";
 
 
 export const {
-  handlers: { GET, POST },
+  handlers,
   auth,
   signIn,
   signOut,
