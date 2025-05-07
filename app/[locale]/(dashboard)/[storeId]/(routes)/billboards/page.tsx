@@ -4,13 +4,12 @@ import prismadb from "@/lib/prismadb";
 
 import BillboardClient from "./components/BillboardClient";
 import { BillboardColumn } from "./components/BillboardColumns";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 const BillboardsPage = async ({
   params
-}: {
-  params: { storeId: string }
-}) => {
+}: PageProps) => {
   const { storeId } = await Promise.resolve(params);
   const billboards = await prismadb.billboard.findMany({
     where: {

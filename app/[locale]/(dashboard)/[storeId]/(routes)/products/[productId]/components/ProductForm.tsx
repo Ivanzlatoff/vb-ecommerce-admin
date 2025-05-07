@@ -171,11 +171,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-          <CreatedOrUpdated
-            name={session?.user?.name!}
-            createdAt={initialData?.createdAt!}
-            updatedAt={initialData?.updatedAt!}
-          />
+          {initialData && 
+            <CreatedOrUpdated
+              name={session?.user?.name!}
+              createdAt={initialData?.createdAt!}
+              updatedAt={initialData?.updatedAt!}
+            />
+          }
           <FormField 
             control={form.control}
             name="images"

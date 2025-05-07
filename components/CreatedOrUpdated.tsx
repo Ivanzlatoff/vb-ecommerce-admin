@@ -17,7 +17,7 @@ const CreatedOrUpdated = ({
   updatedAt
 }: CreatedProps) => {
   const { t, i18n } = useTranslation(['common']);
-
+  
   const wasUpdated = format(updatedAt, "HH:mm MMMM do, yyyy") > format(createdAt, "HH:mm MMMM do, yyyy");
   const locale: Locale = i18n.language === 'uk' ? uk : i18n.language === 'ru' ? ru : enGB;
 
