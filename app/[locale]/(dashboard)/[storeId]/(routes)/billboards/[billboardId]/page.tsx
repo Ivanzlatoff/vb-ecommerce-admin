@@ -7,8 +7,6 @@ const BillboardPage = async ({
   params
 }: {
   params: {
-    locale: string;
-    storeId: string;
     billboardId: string;
   };
 }) => {
