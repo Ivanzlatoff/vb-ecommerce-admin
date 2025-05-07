@@ -9,13 +9,14 @@ export async function GET(
   { params }: { params: { orderId: string } }
 ) {
   try {
-    if (!params.orderId) {
+    const { orderId } = await Promise.resolve(params);
+    if (!orderId) {
       return new NextResponse("Order id is required", { status: 400 })
     }
 
     const order = await prismadb.order.findUnique({
       where: {
-        id: params.orderId,
+        id: orderId,
       },
       include: {
         orderItems: true,
@@ -35,6 +36,7 @@ export async function PATCH(
   { params }: { params: { storeId: string, orderId: string}}
 ) {
   try {
+    const { storeId, orderId } = await Promise.resolve(params);
     const session = await auth();
     const userId = session?.user.id;
     const body = await req.json();
@@ -47,7 +49,7 @@ export async function PATCH(
 
     const order = await prismadb.order.update({
       where: {
-        id: params.orderId,
+        id: orderId,
       },
       data: {
         status: selectedValue
@@ -66,6 +68,7 @@ export async function DELETE(
   { params }: { params: { storeId: string, orderId: string } }
 ) {
   try {
+    const { storeId, orderId } = await Promise.resolve(params);
     const session = await auth();
     const userId = session?.user.id;
 
@@ -73,13 +76,13 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 401 })
     }
 
-    if (!params.orderId) {
+    if (!orderId) {
       return new NextResponse("Order id is required", { status: 400 })
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.storeId,
+        id: storeId,
         userId
       }
     });
@@ -90,7 +93,7 @@ export async function DELETE(
 
     const order = await prismadb.order.deleteMany({
       where: {
-        id: params.orderId,
+        id: orderId,
       }
     });
 

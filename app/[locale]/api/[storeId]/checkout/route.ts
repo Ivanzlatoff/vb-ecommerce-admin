@@ -25,6 +25,7 @@ export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
+  const { storeId } = await Promise.resolve(params);
   const { cartItems } = await req.json();
 
   if (cartItems.length === 0) {
@@ -48,7 +49,7 @@ export async function POST(
 
   const order = await prismadb.order.create({
     data: {
-      storeId: params.storeId,
+      storeId: storeId,
       isPaid: false,
       orderItems: {
         create: cartItems.map((cartItem: CartItem) => ({

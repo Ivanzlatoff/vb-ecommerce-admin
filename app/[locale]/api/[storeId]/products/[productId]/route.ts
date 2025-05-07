@@ -9,13 +9,14 @@ export async function GET(
   { params }: { params: { productId: string } }
 ) {
   try {
-    if (!params.productId) {
+    const { productId } = await Promise.resolve(params);
+    if (!productId) {
       return new NextResponse("Product id is required", { status: 400 })
     }
 
     const product = await prismadb.product.findUnique({
       where: {
-        id: params.productId,
+        id: productId,
       },
       include: {
         images: true,
@@ -39,6 +40,7 @@ export async function PATCH(
   { params }: { params: { storeId: string, productId: string }}
 ) {
   try {
+    const { storeId, productId } = await Promise.resolve(params);
     const session = await auth();
     const userId = session?.user.id;
     const body = await req.json();
@@ -87,13 +89,13 @@ export async function PATCH(
       return new NextResponse("Color id is required", { status: 400 });
     }
 
-    if (!params.productId) {
+    if (!productId) {
       return new NextResponse("Product id is required", { status: 400 })
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.storeId,
+        id: storeId,
         userId
       }
     });
@@ -122,7 +124,7 @@ export async function PATCH(
 
     await prismadb.product.update({
       where: {
-        id: params.productId,
+        id: productId,
       },
       data: {
         name,
@@ -144,7 +146,7 @@ export async function PATCH(
 
     const product = await prismadb.product.update({
       where: {
-        id: params.productId
+        id: productId
       },
       data: {
         images: {
@@ -170,6 +172,7 @@ export async function DELETE(
   { params }: { params: { storeId: string, productId: string } }
 ) {
   try {
+    const { storeId, productId } = await Promise.resolve(params);
     const session = await auth();
     const userId = session?.user.id;
 
@@ -177,13 +180,13 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 401 })
     }
 
-    if (!params.productId) {
+    if (!productId) {
       return new NextResponse("Product id is required", { status: 400 })
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.storeId,
+        id: storeId,
         userId
       }
     });
@@ -194,7 +197,7 @@ export async function DELETE(
 
     const product = await prismadb.product.deleteMany({
       where: {
-        id: params.productId,
+        id: productId,
       }
     });
 

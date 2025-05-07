@@ -51,7 +51,7 @@ export default async function RootLayout(
   });
 
   return (
-    <html lang="en">
+    <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <TranslationsProvider resources={resources} locale={locale} namespaces={i18nNamespaces}>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>

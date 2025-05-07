@@ -20,19 +20,20 @@ interface UserSettingsLayoutProps {
 
 async function UserSettingsLayout({
   children,
-  params: { locale }
+  params
 }: UserSettingsLayoutProps) {
+  const { locale } = await Promise.resolve(params);
   const { t } = await initTranslations({
     locale,
     namespaces: ['common']
   });
   const session = await auth();
-  console.log({session})
+
   if (!session?.user) {
     redirect('/auth/login')
   };
 
-  const stores = await useStores(session?.user.id);
+  const stores = await useStores(session.user.id!);
 
   return (
     <div className='h-screen'>  

@@ -9,13 +9,14 @@ export async function GET(
   { params }: { params: { categoryId: string } }
 ) {
   try {
-    if (!params.categoryId) {
+    const { categoryId } = await Promise.resolve(params);
+    if (!categoryId) {
       return new NextResponse("Category id is required", { status: 400 })
     }
 
     const category = await prismadb.category.findUnique({
       where: {
-        id: params.categoryId,
+        id: categoryId,
       },
       include: {
         billboard: true,
@@ -35,6 +36,7 @@ export async function PATCH(
   { params }: { params: { storeId: string, categoryId: string }}
 ) {
   try {
+    const { storeId, categoryId } = await Promise.resolve(params);
     const session = await auth();
     const userId = session?.user.id;
     const body = await req.json();
@@ -53,13 +55,13 @@ export async function PATCH(
       return new NextResponse("Billboard id is required", { status: 400 })
     }
 
-    if (!params.categoryId) {
+    if (!categoryId) {
       return new NextResponse("Category id is required", { status: 400 })
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.storeId,
+        id: storeId,
         userId
       }
     });
@@ -70,7 +72,7 @@ export async function PATCH(
 
     const category = await prismadb.category.updateMany({
       where: {
-        id: params.categoryId,
+        id: categoryId,
       },
       data: {
         name,
@@ -91,6 +93,7 @@ export async function DELETE(
   { params }: { params: { storeId: string, categoryId: string } }
 ) {
   try {
+    const { storeId, categoryId } = await Promise.resolve(params);
     const session = await auth();
     const userId = session?.user.id;
 
@@ -98,13 +101,13 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 401 })
     }
 
-    if (!params.categoryId) {
+    if (!categoryId) {
       return new NextResponse("Category id is required", { status: 400 })
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.storeId,
+        id: storeId,
         userId
       }
     });
@@ -115,7 +118,7 @@ export async function DELETE(
 
     const category = await prismadb.category.deleteMany({
       where: {
-        id: params.categoryId,
+        id: categoryId,
       }
     });
 

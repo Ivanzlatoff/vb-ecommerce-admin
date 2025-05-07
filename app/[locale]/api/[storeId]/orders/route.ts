@@ -7,13 +7,14 @@ export async function GET(
   { params }: { params: { storeId: string } }
 ) {
   try {  
-    if (!params.storeId) {
+    const { storeId } = await Promise.resolve(params);
+    if (!storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
 
     const orders = await prismadb.order.findMany({
       where: {
-        storeId: params.storeId,
+        storeId: storeId,
       },
       include: {
         orderItems: true

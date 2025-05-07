@@ -8,6 +8,7 @@ export async function POST(
   { params }: { params: { storeId: string } }
 ) {
   try {
+    const { storeId } = await Promise.resolve(params);
     const body = await req.json();
     const { userId, name, value } = body;
     
@@ -23,13 +24,13 @@ export async function POST(
       return new NextResponse("Value is required", { status: 400 });
     }
 
-    if (!params.storeId) {
+    if (!storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.storeId,
+        id: storeId,
         userId
       }
     });
@@ -42,7 +43,7 @@ export async function POST(
       data: {
         name, 
         value,
-        storeId: params.storeId
+        storeId: storeId
       }
     });
 
@@ -59,14 +60,14 @@ export async function GET(
   { params }: { params: { storeId: string } }
 ) {
   try {
-
-    if (!params.storeId) {
+    const { storeId } = await Promise.resolve(params);
+    if (!storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
 
     const colors = await prismadb.color.findMany({
       where: {
-        storeId: params.storeId
+        storeId: storeId
       }
     });
 

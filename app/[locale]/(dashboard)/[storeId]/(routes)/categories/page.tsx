@@ -8,12 +8,11 @@ import { CategoryColumn } from "./components/CategoryColumns";
 
 
 const CategoriesPage = async ({
-  params,
-  params: { locale }
+  params
 }: {
   params: { locale: string, storeId: string }
 }) => {
-  const { storeId } = await Promise.resolve(params);
+  const { locale, storeId } = await Promise.resolve(params);
   const currentLocale: Locale = locale === 'uk' ? uk : locale === 'ru' ? ru : enGB;
 
   const categories = await prismadb.category.findMany({

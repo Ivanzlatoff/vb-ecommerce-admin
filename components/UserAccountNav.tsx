@@ -30,9 +30,9 @@ export const UserAccountNav = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={user?.image || ""} />
+          <AvatarImage src={user?.image || ""} color="#14c94b" />
           <AvatarFallback className="bg-slate-400">
-            <FaUser />
+            <FaUser color={user ? "#233a52" : "red"} />
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
