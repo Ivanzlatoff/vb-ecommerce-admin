@@ -2,12 +2,11 @@ import prismadb from "@/lib/prismadb";
 import BillboardForm from "./components/BillboardForm";
 import RoleGate from "@/components/auth/RoleGate";
 import { UserRole } from "@prisma/client";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 const BillboardPage = async ({
   params
-}: {
-  params: { billboardId: string };
-}) => {
+}: PageProps) => {
   const { billboardId } = await Promise.resolve(params);
   const billboard = await prismadb.billboard.findUnique({
     where: {
