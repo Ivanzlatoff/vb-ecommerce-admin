@@ -6,7 +6,7 @@ import Heading from "@/components/ui/Heading";
 const ServerPage = async ({
   params
 }: {
-  params: { locale: string}
+  params: Promise<{ locale: string}>
 }) => {
   const { locale } = await Promise.resolve(params);
   const { t } = await initTranslations({

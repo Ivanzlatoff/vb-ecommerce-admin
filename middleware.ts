@@ -26,9 +26,6 @@ export default auth((req) => {
     return null;
   }
 
-  const i18nResponse = i18nRouter(req, i18nConfig);
-  if (i18nResponse) return i18nResponse;
-
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
@@ -53,9 +50,9 @@ export default auth((req) => {
   return null;
 });
 
-// export function middleware(request: NextRequest) {
-//   return i18nRouter(request, i18nConfig);
-// }
+export function middleware(request: NextRequest) {
+  return i18nRouter(request, i18nConfig);
+}
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
