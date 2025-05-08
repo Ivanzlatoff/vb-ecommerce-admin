@@ -7,13 +7,12 @@ import Currency from "@/components/ui/Currency";
 import OrderStatus from "./components/OrderStatus";
 import RoleGate from "@/components/auth/RoleGate";
 import { UserRole } from "@prisma/client";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 const OrderPage = async ({
   params
-}: {
-  params: { orderId: string, storeId: string, locale: string }
-}) => {
+}: PageProps) => {
   const { orderId, storeId, locale } = await Promise.resolve(params);
   const { t } = await initTranslations({
     locale: locale,

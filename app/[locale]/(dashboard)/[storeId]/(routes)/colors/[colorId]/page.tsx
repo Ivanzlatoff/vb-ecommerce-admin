@@ -2,13 +2,12 @@ import prismadb from "@/lib/prismadb";
 import ColorForm from "./components/ColorForm";
 import RoleGate from "@/components/auth/RoleGate";
 import { UserRole } from "@prisma/client";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 const ColorPage = async ({
   params
-}: {
-  params: { colorId: string }
-}) => {
+}: PageProps) => {
   const { colorId } = await Promise.resolve(params);
   const color = await prismadb.color.findUnique({
     where: {

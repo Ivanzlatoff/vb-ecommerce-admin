@@ -5,13 +5,12 @@ import prismadb from "@/lib/prismadb";
 
 import CategoryClient from "./components/CategoryClient";
 import { CategoryColumn } from "./components/CategoryColumns";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 const CategoriesPage = async ({
   params
-}: {
-  params: { locale: string, storeId: string }
-}) => {
+}: PageProps) => {
   const { locale, storeId } = await Promise.resolve(params);
   const currentLocale: Locale = locale === 'uk' ? uk : locale === 'ru' ? ru : enGB;
 

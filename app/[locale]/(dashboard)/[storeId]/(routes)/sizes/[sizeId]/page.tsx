@@ -2,13 +2,12 @@ import prismadb from "@/lib/prismadb";
 import SizeForm from "./components/SizeForm";
 import { UserRole } from "@prisma/client";
 import RoleGate from "@/components/auth/RoleGate";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 const SizePage = async ({
   params
-}: {
-  params: { sizeId: string }
-}) => {
+}: PageProps) => {
   const { sizeId } = await Promise.resolve(params);
   const size = await prismadb.size.findUnique({
     where: {

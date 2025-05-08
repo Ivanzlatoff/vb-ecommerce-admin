@@ -5,14 +5,13 @@ import prismadb from "@/lib/prismadb";
 import ProductClient from "./components/ProductClient";
 import { ProductColumn } from "./components/ProductColumns";
 import { formatter } from "@/lib/utils";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 
 const ProductsPage = async ({
   params
-}: {
-  params: { storeId: string }
-}) => {
+}: PageProps) => {
   const { storeId } = await Promise.resolve(params);
   const products = await prismadb.product.findMany({
     where: {

@@ -4,14 +4,13 @@ import prismadb from "@/lib/prismadb";
 
 import ColorClient from "./components/ColorClient";
 import { ColorColumn } from "./components/ColorColumns";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 
 const ColorsPage = async ({
   params
-}: {
-  params: { storeId: string }
-}) => {
+}: PageProps) => {
   const { storeId } = await Promise.resolve(params);
   const colors = await prismadb.color.findMany({
     where: {

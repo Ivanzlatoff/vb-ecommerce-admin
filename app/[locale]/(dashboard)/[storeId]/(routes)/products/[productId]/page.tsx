@@ -2,13 +2,12 @@ import prismadb from "@/lib/prismadb";
 import ProductForm from "./components/ProductForm";
 import RoleGate from "@/components/auth/RoleGate";
 import { UserRole } from "@prisma/client";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 const ProductPage = async ({
   params
-}: {
-  params: { productId: string, storeId: string }
-}) => {
+}: PageProps) => {
   const { productId, storeId } = await Promise.resolve(params);
   const product = await prismadb.product.findUnique({
     where: {

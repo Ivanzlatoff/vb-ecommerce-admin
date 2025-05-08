@@ -5,14 +5,13 @@ import prismadb from "@/lib/prismadb";
 import OrderClient from "./components/OrderClient";
 import { OrderColumn } from "./components/OrderColumns";
 import { formatter } from "@/lib/utils";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 
 const OrdersPage = async ({
   params
-}: {
-  params: { storeId: string }
-}) => {
+}: PageProps) => {
   const { storeId } = await Promise.resolve(params);
   const orders = await prismadb.order.findMany({
     where: {
