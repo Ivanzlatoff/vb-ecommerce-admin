@@ -13,7 +13,7 @@ import initTranslations from "@/app/i18n";
 
 
 interface DashboardPageProps {
-  params: { locale: string, storeId: string }
+  params: Promise<{ locale: string, storeId: string }>
 };
 
 const DashboardPage: React.FC<DashboardPageProps> = async ({
