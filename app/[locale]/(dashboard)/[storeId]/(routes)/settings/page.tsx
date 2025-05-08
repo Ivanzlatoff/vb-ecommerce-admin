@@ -9,9 +9,7 @@ import initTranslations from "@/app/i18n";
 
 
 interface SettingsPageProps {
-  params: {
-    storeId: string,
-  }
+  params: Promise<{ storeId: string }>,
 }
 
 
