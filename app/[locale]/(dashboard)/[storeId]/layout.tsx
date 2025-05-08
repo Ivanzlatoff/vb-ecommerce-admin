@@ -10,7 +10,7 @@ export default async function DashboardLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string, storeId: string }
+  params: Promise<{ locale: string, storeId: string }>
 }) {
   const session = await auth();
   const { locale, storeId } = await Promise.resolve(params);

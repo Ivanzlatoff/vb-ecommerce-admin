@@ -16,18 +16,18 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { nextUrl } = req;
-  console.log({nextUrl})
   const isLoggedIn = !!req.auth;
-  console.log({isLoggedIn})
+
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  console.log({isApiAuthRoute})
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  console.log({isPublicRoute})
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  console.log({isAuthRoute})
+
   if (isApiAuthRoute) {
     return null;
   }
+
+  const i18nResponse = i18nRouter(req, i18nConfig);
+  if (i18nResponse) return i18nResponse;
 
   if (isAuthRoute) {
     if (isLoggedIn) {
@@ -53,9 +53,9 @@ export default auth((req) => {
   return null;
 });
 
-export function middleware(request: NextRequest) {
-  return i18nRouter(request, i18nConfig);
-}
+// export function middleware(request: NextRequest) {
+//   return i18nRouter(request, i18nConfig);
+// }
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
