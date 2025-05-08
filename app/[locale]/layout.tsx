@@ -53,18 +53,18 @@ export default async function RootLayout(
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
-        <TranslationsProvider resources={resources} locale={locale} namespaces={i18nNamespaces}>
-          <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-            <SessionProvider session={session}>
+        <SessionProvider session={session}>
+          <TranslationsProvider resources={resources} locale={locale} namespaces={i18nNamespaces}>
+            <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
               <main className='w-screen max-h-fit min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 dark:from-slate-500 to-slate-300 dark:to-slate-900'>
                 {children}
               </main>
               <ModalProvider />
               <Toaster />
               <SonnexToaster />
-            </SessionProvider>
-          </ThemeProvider>
-        </TranslationsProvider>
+            </ThemeProvider>
+          </TranslationsProvider>
+        </SessionProvider>
       </body>
     </html>
   );

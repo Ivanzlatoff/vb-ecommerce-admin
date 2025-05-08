@@ -28,7 +28,6 @@ async function UserSettingsLayout({
     namespaces: ['common']
   });
   const session = await auth();
-
   if (!session?.user) {
     redirect('/auth/login')
   };

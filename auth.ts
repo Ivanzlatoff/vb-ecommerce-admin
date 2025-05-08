@@ -52,7 +52,6 @@ export const {
       return true;
     },
     async session({ token, session }) {
-
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -91,5 +90,5 @@ export const {
   },
   adapter: PrismaAdapter(prismadb),
   session: { strategy: "jwt" },
-  ...authConfig,
+  ...authConfig
 })
