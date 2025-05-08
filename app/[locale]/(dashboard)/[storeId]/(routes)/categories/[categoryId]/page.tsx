@@ -2,13 +2,12 @@ import prismadb from "@/lib/prismadb";
 import CategoryForm from "./components/CategoryForm";
 import RoleGate from "@/components/auth/RoleGate";
 import { UserRole } from "@prisma/client";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 const CategoryPage = async ({
   params
-}: {
-  params: { categoryId: string, storeId: string }
-}) => {
+}: PageProps) => {
   const { categoryId, storeId } = await Promise.resolve(params);
   const category = await prismadb.category.findUnique({
     where: {
