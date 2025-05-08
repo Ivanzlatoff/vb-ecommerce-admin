@@ -15,7 +15,7 @@ import initTranslations from '@/app/i18n';
 
 interface UserSettingsLayoutProps {
   children: React.ReactNode;
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
 async function UserSettingsLayout({
