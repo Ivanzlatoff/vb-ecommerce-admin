@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
 import { auth } from "@/auth";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: PageProps
 ) {
   try {
     const { billboardId } = await Promise.resolve(params);
