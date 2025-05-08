@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 export async function GET(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: PageProps
 ) {
   try {  
     const { storeId } = await Promise.resolve(params);

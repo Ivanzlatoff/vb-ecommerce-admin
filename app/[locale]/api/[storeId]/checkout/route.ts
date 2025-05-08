@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import prismadb from "@/lib/prismadb";
 import { Product } from "@prisma/client";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 interface CartItem extends Product {
@@ -23,7 +24,7 @@ export async function OPTIONS() {
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: PageProps
 ) {
   const { storeId } = await Promise.resolve(params);
   const { cartItems } = await req.json();

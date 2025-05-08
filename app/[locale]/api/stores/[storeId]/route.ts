@@ -2,16 +2,17 @@ import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
 import { auth } from "@/auth";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string }}
+  { params }: PageProps
 ) {
   try {
     const session = await auth();
     const userId = session?.user.id;
     const body = await req.json();
-
+    const { storeId } = await Promise.resolve(params);
     const { name } = body;
 
     if (!userId) {
@@ -22,13 +23,13 @@ export async function PATCH(
       return new NextResponse("Name is required", { status: 400 })
     }
 
-    if (!params.storeId) {
+    if (!storeId) {
       return new NextResponse("Store id is required", { status: 400 })
     }
 
     const store = await prismadb.store.updateMany({
       where: {
-        id: params.storeId,
+        id: storeId,
         userId
       },
       data: {

@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
 import { auth } from "@/auth";
+import { PageProps } from "@/.next/types/app/[locale]/layout";
 
 
 export async function GET(
   req: Request,
-  { params }: { params: { productId: string } }
+  { params }: PageProps
 ) {
   try {
     const { productId } = await Promise.resolve(params);
@@ -37,7 +38,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string, productId: string }}
+  { params }: PageProps
 ) {
   try {
     const { storeId, productId } = await Promise.resolve(params);
@@ -169,7 +170,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string, productId: string } }
+  { params }: PageProps
 ) {
   try {
     const { storeId, productId } = await Promise.resolve(params);
