@@ -8,7 +8,7 @@ import MainNav from "@/components/MainNav";
 import StoreSwitcher from "@/components/StoreSwitcher";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { auth } from "@/auth";
-import { useStores } from "@/app/[locale]/hooks/use-stores";
+import { getStores } from "@/app/[locale]/hooks/use-stores";
 import { LanguageChanger } from "./LanguageChanger";
 import initTranslations from "@/app/i18n";
 import { Separator } from "./ui/separator";
@@ -37,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = async ({
     redirect('/auth/login');
   }
 
-  const stores = await useStores(userId);
+  const stores = await getStores(userId);
 
   return (
     <div className='flex-col'>

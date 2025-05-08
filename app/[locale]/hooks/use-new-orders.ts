@@ -1,7 +1,7 @@
 import prismadb from "@/lib/prismadb";
 
 
-const useNewOrders = async (storeId: string) => {
+const getNewOrders = async (storeId: string) => {
   const orders = await prismadb.order.findMany({
     where: {
       storeId
@@ -18,4 +18,4 @@ const useNewOrders = async (storeId: string) => {
   return newOrders;
 };
 
-export default useNewOrders;
+export default getNewOrders;

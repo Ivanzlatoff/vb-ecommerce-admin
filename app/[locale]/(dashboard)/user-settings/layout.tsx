@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 
 import { auth } from '@/auth';
 import StoreSwitcher from '@/components/StoreSwitcher';
-import { useStores } from '@/app/[locale]/hooks/use-stores';
+import { getStores } from '@/app/[locale]/hooks/use-stores';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import LogoutButton from '@/components/auth/LogoutButton';
@@ -32,8 +32,7 @@ async function UserSettingsLayout({
     redirect('/auth/login')
   };
 
-  const stores = await useStores(session.user.id!);
-
+  const stores = await getStores(session.user.id!);
   return (
     <div className='h-screen'>  
       <div className='flex flex-col sm:flex-row items-center justify-between w-full py-3 px-3 space-y-4'>
